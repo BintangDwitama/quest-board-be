@@ -10,5 +10,10 @@ func StartHTTPServer() {
 
 	router.GET("/ping", handler.Ping)
 
+	router.GET("/tasks", handler.GetTaskList)
+	router.POST("/tasks", handler.CreateTask)
+	router.PUT("/tasks", handler.UpdateTask)
+	router.DELETE("/tasks", handler.DeleteTask)
+
 	router.Run()
 }

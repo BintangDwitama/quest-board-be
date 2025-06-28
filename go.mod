@@ -2,7 +2,10 @@ module github.com/BintangDwitama/quest-board-be
 
 go 1.24.4
 
-require github.com/gin-gonic/gin v1.10.1
+require (
+	github.com/gin-gonic/gin v1.10.1
+	github.com/google/uuid v1.6.0
+)
 
 require (
 	github.com/bytedance/sonic v1.13.3 // indirect

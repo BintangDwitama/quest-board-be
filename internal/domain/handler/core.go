@@ -1,34 +1,128 @@
 package handler
 
 import (
+	"errors"
+
 	"github.com/BintangDwitama/quest-board-be/internal/domain/constants"
+	"github.com/BintangDwitama/quest-board-be/internal/domain/model"
+	"github.com/BintangDwitama/quest-board-be/internal/domain/usecase"
 	"github.com/gin-gonic/gin"
 )
 
-func GetTaskList(ctx *gin.Context) {
+type coreHandler struct {
+	usecase usecase.CoreUsecase
+}
+
+func NewCoreHandler(usecase usecase.CoreUsecase) *coreHandler {
+	return &coreHandler{
+		usecase: usecase,
+	}
+}
+
+func (core *coreHandler) GetTaskList(ctx *gin.Context) {
+	resp, err := core.usecase.GetAllTasks(0)
+	if err != nil {
+		if errors.As(err, &constants.GeneralErrorConcrete) {
+			ctx.AbortWithStatusJSON(
+				constants.GeneralErrorConcrete.Code,
+				constants.FailedResponse(
+					constants.GeneralErrorConcrete.Message, nil,
+				),
+			)
+			return
+		} else {
+			ctx.AbortWithStatusJSON(
+				500,
+				constants.FailedResponse(
+					"Unknown Error", nil,
+				),
+			)
+		}
+	}
+
 	ctx.JSON(
-		503,
-		constants.FailedResponse("Service Unavailable", nil),
+		200,
+		constants.SuccessResponse("Request Success", resp),
 	)
 }
 
-func CreateTask(ctx *gin.Context) {
+func (core *coreHandler) CreateTask(ctx *gin.Context) {
+	err := core.usecase.CreateNewTask(model.Task{})
+	if err != nil {
+		if errors.As(err, &constants.GeneralErrorConcrete) {
+			ctx.AbortWithStatusJSON(
+				constants.GeneralErrorConcrete.Code,
+				constants.FailedResponse(
+					constants.GeneralErrorConcrete.Message, nil,
+				),
+			)
+			return
+		} else {
+			ctx.AbortWithStatusJSON(
+				500,
+				constants.FailedResponse(
+					"Unknown Error", nil,
+				),
+			)
+		}
+	}
+
 	ctx.JSON(
-		503,
-		constants.FailedResponse("Service Unavailable", nil),
+		200,
+		constants.SuccessResponse("Request Success", nil),
 	)
 }
 
-func UpdateTask(ctx *gin.Context) {
+func (core *coreHandler) UpdateTask(ctx *gin.Context) {
+	err := core.usecase.UpdateTask(0, model.Task{})
+	if err != nil {
+		if errors.As(err, &constants.GeneralErrorConcrete) {
+			ctx.AbortWithStatusJSON(
+				constants.GeneralErrorConcrete.Code,
+				constants.FailedResponse(
+					constants.GeneralErrorConcrete.Message, nil,
+				),
+			)
+			return
+		} else {
+			ctx.AbortWithStatusJSON(
+				500,
+				constants.FailedResponse(
+					"Unknown Error", nil,
+				),
+			)
+		}
+	}
+
 	ctx.JSON(
-		503,
-		constants.FailedResponse("Service Unavailable", nil),
+		200,
+		constants.SuccessResponse("Request Success", nil),
 	)
 }
 
-func DeleteTask(ctx *gin.Context) {
+func (core *coreHandler) DeleteTask(ctx *gin.Context) {
+	err := core.usecase.DeleteTask(0)
+	if err != nil {
+		if errors.As(err, &constants.GeneralErrorConcrete) {
+			ctx.AbortWithStatusJSON(
+				constants.GeneralErrorConcrete.Code,
+				constants.FailedResponse(
+					constants.GeneralErrorConcrete.Message, nil,
+				),
+			)
+			return
+		} else {
+			ctx.AbortWithStatusJSON(
+				500,
+				constants.FailedResponse(
+					"Unknown Error", nil,
+				),
+			)
+		}
+	}
+
 	ctx.JSON(
-		503,
-		constants.FailedResponse("Service Unavailable", nil),
+		200,
+		constants.SuccessResponse("Request Success", nil),
 	)
 }

@@ -3,33 +3,34 @@ package usecase
 import (
 	"github.com/BintangDwitama/quest-board-be/internal/domain/constants"
 	"github.com/BintangDwitama/quest-board-be/internal/domain/model"
+	"github.com/gin-gonic/gin"
 )
 
-type CoreUsecase interface {
-	CreateNewTask(newTask model.Task) error
-	GetAllTasks(userId int64) ([]model.Task, error)
-	UpdateTask(taskId int64, taskData model.Task) error
-	DeleteTask(taskId int64) error
+type Usecase interface {
+	CreateNewTask(ctx *gin.Context, newTask model.Task) error
+	GetAllTasks(ctx *gin.Context, userId int64) ([]model.Task, error)
+	UpdateTask(ctx *gin.Context, taskId int64, taskData model.Task) error
+	DeleteTask(ctx *gin.Context, taskId int64) error
 }
 
-type coreUsecase struct{}
+type usecase struct{}
 
-func NewCoreUsecase() *coreUsecase {
-	return &coreUsecase{}
+func NewUsecase() Usecase {
+	return &usecase{}
 }
 
-func (core *coreUsecase) CreateNewTask(newTask model.Task) error {
+func (core *usecase) CreateNewTask(ctx *gin.Context, newTask model.Task) error {
 	return constants.NewGeneralError(503, "Service no available")
 }
 
-func (core *coreUsecase) GetAllTasks(userId int64) ([]model.Task, error) {
+func (core *usecase) GetAllTasks(ctx *gin.Context, userId int64) ([]model.Task, error) {
 	return nil, constants.NewGeneralError(503, "Service no available")
 }
 
-func (core *coreUsecase) UpdateTask(taskId int64, taskData model.Task) error {
+func (core *usecase) UpdateTask(ctx *gin.Context, taskId int64, taskData model.Task) error {
 	return constants.NewGeneralError(503, "Service no available")
 }
 
-func (core *coreUsecase) DeleteTask(taskId int64) error {
+func (core *usecase) DeleteTask(ctx *gin.Context, taskId int64) error {
 	return constants.NewGeneralError(503, "Service no available")
 }

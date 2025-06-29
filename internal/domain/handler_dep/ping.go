@@ -1,4 +1,4 @@
-package handler
+package handler_dep
 
 import (
 	"github.com/BintangDwitama/quest-board-be/internal/domain/constants"
